@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/views/home_page.dart';
+import 'package:recipe_app/views/recipe_list.dart';
 
 void main() {
   runApp(const RecipeApp());
@@ -10,9 +10,9 @@ class RecipeApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: HomePage(),
+      home: RecipesList(),
     );
   }
 }
