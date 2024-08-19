@@ -11,18 +11,18 @@ class CustomAppBarWidget extends StatelessWidget
       centerTitle: true,
       title: Text(
         title,
-        style: TextStyle(
+        style: const TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 24,
           color: Color(0xff4A7C74),
         ),
       ),
-      leading: Icon(
+      leading: const Icon(
         Icons.filter_list,
         color: Color(0xff4A7C74),
         size: 32,
       ),
-      actions: [
+      actions: const [
         Icon(
           Icons.search,
           color: Color(0xff4A7C74),
@@ -36,5 +36,5 @@ class CustomAppBarWidget extends StatelessWidget
   }
 
   @override
-  Size get preferredSize => Size.fromHeight(kToolbarHeight);
+  Size get preferredSize => const Size.fromHeight(kToolbarHeight);
 }

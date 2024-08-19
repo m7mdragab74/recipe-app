@@ -1,19 +1,18 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/views/favorite_recipe.dart';
+import 'package:recipe_app/views/recipe_list.dart';
 import 'package:recipe_app/widget/custom_app_bar.dart';
 import 'package:recipe_app/widget/custom_botton_nav_bar.dart';
 
-class RecipesListPage extends StatefulWidget {
-  const RecipesListPage({super.key});
-
-  static const primaryColor = Colors.blue; // Define primary color
+class FavoriteRecipePage extends StatefulWidget {
+  const FavoriteRecipePage({super.key});
 
   @override
-  State<RecipesListPage> createState() => _RecipesListPageState();
+  State<FavoriteRecipePage> createState() => _FavoriteRecipePageState();
 }
 
-class _RecipesListPageState extends State<RecipesListPage> {
-  int _selectedIndex = 0;
+class _FavoriteRecipePageState extends State<FavoriteRecipePage> {
+  int _selectedIndex =
+      1; // Set this to 1 since it's the second tab in the nav bar
 
   @override
   Widget build(BuildContext context) {
@@ -23,7 +22,7 @@ class _RecipesListPageState extends State<RecipesListPage> {
           RecipesListPage(),
           FavoriteRecipePage(),
         ],
-        color: RecipesListPage.primaryColor,
+        color: const Color(0xff4A7C74),
         selectedIndex: _selectedIndex,
         onItemSelected: (index) {
           setState(() {
@@ -32,7 +31,10 @@ class _RecipesListPageState extends State<RecipesListPage> {
         },
       ),
       appBar: const CustomAppBarWidget(
-        title: 'Recipes List',
+        title: 'Favorite Recipe',
+      ),
+      body: const Center(
+        child: Text('Your favorite recipes will appear here.'),
       ),
     );
   }
