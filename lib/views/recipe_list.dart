@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/models/image_model.dart';
+import 'package:recipe_app/models/recipe_card_model.dart';
 import 'package:recipe_app/views/favorite_recipe.dart';
 import 'package:recipe_app/widget/custom_app_bar.dart';
 import 'package:recipe_app/widget/custom_botton_nav_bar.dart';
-import 'package:recipe_app/widget/image_card.dart';
+import 'package:recipe_app/widget/recipe_card.dart';
 
 class RecipesListPage extends StatefulWidget {
   const RecipesListPage({super.key});
@@ -17,11 +17,27 @@ class RecipesListPage extends StatefulWidget {
 class _RecipesListPageState extends State<RecipesListPage> {
   int _selectedIndex = 0;
 
-  final List<ImageModel> imageView = [
-    ImageModel(image: 'assets/IMG_3667.HEIC'),
-    ImageModel(image: 'assets/IMG_3667.HEIC'),
-    ImageModel(image: 'assets/IMG_3667.HEIC'),
-    ImageModel(image: 'assets/IMG_3667.HEIC'),
+  final List<RecipeCardModel> recipes = [
+    RecipeCardModel(
+      imagePath: 'assets/IMG_3667.HEIC',
+      titleName: 'friends',
+    ),
+    RecipeCardModel(
+      imagePath: 'assets/IMG_3667.HEIC',
+      titleName: 'friends',
+    ),
+    RecipeCardModel(
+      imagePath: 'assets/IMG_3667.HEIC',
+      titleName: 'friends',
+    ),
+    RecipeCardModel(
+      imagePath: 'assets/IMG_3667.HEIC',
+      titleName: 'friends',
+    ),
+    RecipeCardModel(
+      imagePath: 'assets/IMG_3667.HEIC',
+      titleName: 'friends',
+    ),
   ];
   @override
   Widget build(BuildContext context) {
@@ -46,14 +62,15 @@ class _RecipesListPageState extends State<RecipesListPage> {
           gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 9,
-            mainAxisSpacing: 16,
+            mainAxisSpacing: 1,
           ),
-          itemCount: imageView.length,
+          itemCount: recipes.length,
           itemBuilder: (context, index) {
             return Padding(
               padding: const EdgeInsets.all(12),
-              child: ImageCard(
-                image: imageView[index],
+              child: RecipeCard(
+                imagePath: recipes[index],
+                titleName: recipes[index],
               ),
             );
           }),
