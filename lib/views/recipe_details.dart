@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/widget/custom_container.dart';
 
 class RecipeDetailsPage extends StatelessWidget {
   const RecipeDetailsPage({super.key});
@@ -55,7 +56,7 @@ class RecipeDetailsPage extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
+          SizedBox(
             height: 300,
             width: double.infinity,
             child: Image.asset(
@@ -65,15 +66,50 @@ class RecipeDetailsPage extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.all(22),
-            child: Text(
-              'Kariwari Chicken Curry',
-              style: TextStyle(
-                color: Color(0xff4A7C74),
-                fontWeight: FontWeight.bold,
-                fontSize: 24,
-              ),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                const Text(
+                  'Kariwari Chicken Curry',
+                  style: TextStyle(
+                    color: Color(0xff4A7C74),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24,
+                  ),
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                Row(
+                  children: [
+                    CustomContainer(
+                      title: 'Easy',
+                    ),
+                    CustomContainer(
+                      title: '35 mnc',
+                      icon: Icons.timelapse,
+                    ),
+                    CustomContainer(
+                      title: 'ngridients',
+                      icon: Icons.nightlife_rounded,
+                    )
+                  ],
+                ),
+                const SizedBox(
+                  height: 12,
+                ),
+                const Text(
+                  '''
+                  Kensar is a smell coastal town of north Karnakate.
+Kervori food is based on generous use of cosort.
+Kansari chicken curey is cooked in cosonut gravy and with usa at vary logs oil. am shanng Authontic Kansari Rosize. Do try k. You are gaing to love t.
+                  ''',
+                  style: TextStyle(fontSize: 16, height: 1.5),
+                  textAlign: TextAlign.justify,
+                )
+              ],
             ),
-          )
+          ),
         ],
       ),
     );
