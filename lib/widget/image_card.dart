@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/models/image_model.dart';
 
 class ImageCard extends StatefulWidget {
-  ImageCard({super.key, required this.image});
+  const ImageCard({super.key, required this.image});
   final ImageModel image;
 
   @override
