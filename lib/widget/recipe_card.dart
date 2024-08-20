@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/views/recipe_details.dart';
 
 class RecipeCard extends StatefulWidget {
-  RecipeCard({super.key, required this.titleName, required this.imagePath});
+  const RecipeCard(
+      {super.key, required this.titleName, required this.imagePath});
 
   final RecipeCardModel titleName;
   final RecipeCardModel imagePath;
@@ -21,14 +23,24 @@ class _RecipeCardState extends State<RecipeCard> {
       children: [
         Stack(
           children: [
-            ClipRRect(
-              borderRadius: BorderRadius.circular(10),
-              child: AspectRatio(
-                aspectRatio: 4 / 3, // Adjust the aspect ratio as needed
-                child: Image.asset(
-                  widget.imagePath.imagePath,
-                  width: double.infinity,
-                  fit: BoxFit.cover,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => const RecipeDetailsPage(),
+                  ),
+                );
+              },
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(10),
+                child: AspectRatio(
+                  aspectRatio: 4 / 3,
+                  child: Image.asset(
+                    widget.imagePath.imagePath,
+                    width: double.infinity,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -55,14 +67,14 @@ class _RecipeCardState extends State<RecipeCard> {
             ),
           ],
         ),
-        SizedBox(
+        const SizedBox(
           height: 4,
         ),
         Padding(
-          padding: EdgeInsets.all(8),
+          padding: const EdgeInsets.all(8),
           child: Text(
             widget.titleName.titleName,
-            style: TextStyle(
+            style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
             ),

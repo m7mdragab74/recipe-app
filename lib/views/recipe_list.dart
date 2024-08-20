@@ -59,7 +59,7 @@ class _RecipesListPageState extends State<RecipesListPage> {
         title: 'Recipes List',
       ),
       body: GridView.builder(
-          gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
             crossAxisCount: 2,
             crossAxisSpacing: 9,
             mainAxisSpacing: 1,
