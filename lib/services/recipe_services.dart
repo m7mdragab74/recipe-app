@@ -24,7 +24,7 @@ class RecipeService {
     try {
       final response = await dio.get(
         'https://api.spoonacular.com/recipes/complexSearch',
-        queryParameters: {'apiKey': 'no key'},
+        queryParameters: {'apiKey': '16f916df31eb46529a4012b3a03cd1be'},
       );
 
       if (response.data != null && response.data['results'] != null) {
@@ -39,6 +39,28 @@ class RecipeService {
         throw Exception('Network error: ${e.message}');
       } else {
         throw Exception('Failed to load recipes');
+      }
+    }
+  }
+
+  Future<RecipeModel> getRecipeDetails(int id) async {
+    try {
+      final response = await dio.get(
+        'https://api.spoonacular.com/recipes/$id/information?&includeNutrition=false',
+        queryParameters: {'apiKey': '16f916df31eb46529a4012b3a03cd1be'},
+      );
+
+      if (response.data != null) {
+        return RecipeModel.fromJson(response.data);
+      } else {
+        throw Exception('Unexpected response structure');
+      }
+    } catch (e) {
+      print('Error fetching recipe details: $e');
+      if (e is DioError) {
+        throw Exception('Network error: ${e.message}');
+      } else {
+        throw Exception('Failed to load recipe details');
       }
     }
   }
