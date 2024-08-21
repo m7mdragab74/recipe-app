@@ -27,7 +27,7 @@ class DetailsWidget extends StatelessWidget {
               children: [
                 Text(
                   recipe.title,
-                  style: TextStyle(
+                  style: const TextStyle(
                     color: Color(0xff4A7C74),
                     fontWeight: FontWeight.bold,
                     fontSize: 24,
@@ -52,7 +52,7 @@ class DetailsWidget extends StatelessWidget {
                 const SizedBox(height: 12),
                 Text(
                   recipe.summary,
-                  style: TextStyle(fontSize: 16, height: 1.5),
+                  style: const TextStyle(fontSize: 16, height: 1.5),
                   textAlign: TextAlign.justify,
                 )
               ],

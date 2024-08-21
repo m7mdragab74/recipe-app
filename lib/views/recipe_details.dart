@@ -103,7 +103,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
               ? Center(child: Text(_errorMessage))
               : (_recipe != null
                   ? DetailsWidget(recipe: _recipe!)
-                  : Center(child: Text('Recipe not found'))),
+                  : const Center(child: Text('Recipe not found'))),
     );
   }
 }

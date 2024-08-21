@@ -49,7 +49,7 @@ class _FavoriteRecipePageState extends State<FavoriteRecipePage> {
           });
         },
       ),
-      appBar: CustomAppBarWidget(
+      appBar: const CustomAppBarWidget(
         title: 'Favorite Recipe',
       ),
       body: _isLoading
