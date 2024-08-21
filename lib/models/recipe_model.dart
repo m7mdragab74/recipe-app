@@ -14,14 +14,15 @@ class RecipeModel {
   });
 
   factory RecipeModel.fromJson(Map<String, dynamic> json) {
-    final ingredients = (json['extendedIngredients'] as List<dynamic>)
-        .map((ingredients) => ingredients['original'] as String)
-        .toList();
+    final ingredients = (json['extendedIngredients'] as List<dynamic>?)
+            ?.map((ingredient) => ingredient['original'] as String)
+            .toList() ??
+        [];
     return RecipeModel(
-      title: json['title'],
-      image: json['image'],
-      time: json['readyInMinutes'],
-      summary: json['summary'],
+      title: json['title'] ?? 'No title',
+      image: json['image'] ?? '',
+      time: json['readyInMinutes'] ?? 0,
+      summary: json['summary'] ?? 'No summary',
       ingredients: ingredients,
     );
   }

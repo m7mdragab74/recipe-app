@@ -1,13 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/models/recipe_card_model.dart';
+import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/views/recipe_details.dart';
 
 class RecipeCard extends StatefulWidget {
-  const RecipeCard(
-      {super.key, required this.titleName, required this.imagePath});
+  const RecipeCard({super.key, required this.recipe});
 
-  final RecipeCardModel titleName;
-  final RecipeCardModel imagePath;
+  final RecipeModel recipe;
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -36,8 +34,8 @@ class _RecipeCardState extends State<RecipeCard> {
                 borderRadius: BorderRadius.circular(10),
                 child: AspectRatio(
                   aspectRatio: 4 / 3,
-                  child: Image.asset(
-                    widget.imagePath.imagePath,
+                  child: Image.network(
+                    widget.recipe.image,
                     width: double.infinity,
                     fit: BoxFit.cover,
                   ),
@@ -49,8 +47,9 @@ class _RecipeCardState extends State<RecipeCard> {
               right: 8,
               child: Container(
                 decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.5),
-                    shape: BoxShape.circle),
+                  color: Colors.white.withOpacity(0.5),
+                  shape: BoxShape.circle,
+                ),
                 child: IconButton(
                   onPressed: () {
                     setState(() {
@@ -67,13 +66,11 @@ class _RecipeCardState extends State<RecipeCard> {
             ),
           ],
         ),
-        const SizedBox(
-          height: 4,
-        ),
+        const SizedBox(height: 4),
         Padding(
           padding: const EdgeInsets.all(8),
           child: Text(
-            widget.titleName.titleName,
+            widget.recipe.title,
             style: const TextStyle(
               fontWeight: FontWeight.bold,
               fontSize: 16,
