@@ -1,7 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'dart:io';
-
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:recipe_app/models/recipe_model.dart';
 
 class RecipeService {
@@ -21,10 +21,15 @@ class RecipeService {
   }
 
   Future<List<RecipeModel>> getRecipes() async {
+    final apiKey = dotenv.env['API_KEY'];
+    if (apiKey == null) {
+      throw Exception('API key is missing');
+    }
+
     try {
       final response = await dio.get(
         'https://api.spoonacular.com/recipes/complexSearch',
-        queryParameters: {'apiKey': '16f916df31eb46529a4012b3a03cd1be'},
+        queryParameters: {'apiKey': apiKey},
       );
 
       if (response.data != null && response.data['results'] != null) {
