@@ -65,7 +65,9 @@ class _RecipeCardState extends State<RecipeCard> {
                       recipeId: widget.recipe.id,
                     ),
                   ),
-                );
+                ).then((value) => setState(() {
+                  
+                }));
               },
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(10),
