@@ -90,7 +90,7 @@ class RecipeDetailsPage extends StatelessWidget {
                       icon: Icons.timelapse,
                     ),
                     CustomContainer(
-                      title: 'ngridients',
+                      title: 'ingredients',
                       icon: Icons.nightlife_rounded,
                     )
                   ],
