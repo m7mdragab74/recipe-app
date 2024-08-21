@@ -18,6 +18,7 @@ class RecipeModel {
             ?.map((ingredient) => ingredient['original'] as String)
             .toList() ??
         [];
+
     return RecipeModel(
       title: json['title'] ?? 'No title',
       image: json['image'] ?? '',
