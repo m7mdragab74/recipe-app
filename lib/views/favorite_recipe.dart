@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:recipe_app/views/recipe_list.dart';
-import 'package:recipe_app/widget/custom_app_bar.dart';
-import 'package:recipe_app/widget/custom_botton_nav_bar.dart';
+import 'package:recipe_app/widget/recipe%20list/custom_app_bar.dart';
+import 'package:recipe_app/widget/recipe%20list/custom_botton_nav_bar.dart';
 
 class FavoriteRecipePage extends StatefulWidget {
   const FavoriteRecipePage({super.key});

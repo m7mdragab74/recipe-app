@@ -26,7 +26,9 @@ class _RecipeCardState extends State<RecipeCard> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(
-                    builder: (context) => const RecipeDetailsPage(),
+                    builder: (context) => RecipeDetailsPage(
+                      recipeId: widget.recipe.id,
+                    ),
                   ),
                 );
               },

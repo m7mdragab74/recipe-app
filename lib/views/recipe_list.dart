@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/services/recipe_services.dart';
 import 'package:recipe_app/views/favorite_recipe.dart';
-import 'package:recipe_app/widget/custom_app_bar.dart';
-import 'package:recipe_app/widget/custom_botton_nav_bar.dart';
-import 'package:recipe_app/widget/recipe_card.dart';
+import 'package:recipe_app/widget/recipe%20list/custom_app_bar.dart';
+import 'package:recipe_app/widget/recipe%20list/custom_botton_nav_bar.dart';
+import 'package:recipe_app/widget/recipe%20list/recipe_card.dart';
 
 class RecipesListPage extends StatefulWidget {
   const RecipesListPage({super.key});

@@ -1,8 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:recipe_app/widget/custom_container.dart';
+import 'package:recipe_app/models/recipe_model.dart';
+import 'package:recipe_app/services/recipe_services.dart';
+import 'package:recipe_app/widget/details%20page/details_widget.dart';
 
-class RecipeDetailsPage extends StatelessWidget {
-  const RecipeDetailsPage({super.key});
+class RecipeDetailsPage extends StatefulWidget {
+  final int recipeId; // Ensure this is an int or String as per your model
+
+  const RecipeDetailsPage({super.key, required this.recipeId});
+
+  @override
+  State<RecipeDetailsPage> createState() => _RecipeDetailsPageState();
+}
+
+class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
+  bool _isLoading = true;
+  String _errorMessage = '';
+  RecipeModel? _recipe;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchRecipeDetails();
+  }
+
+  Future<void> _fetchRecipeDetails() async {
+    final recipeService = RecipeService();
+    try {
+      final recipe = await recipeService.getRecipeDetails(widget.recipeId);
+      setState(() {
+        _recipe = recipe;
+        _isLoading = false;
+      });
+    } catch (e) {
+      setState(() {
+        _errorMessage =
+            'Failed to load recipe details. Please try again later.';
+        _isLoading = false;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -19,99 +55,23 @@ class RecipeDetailsPage extends StatelessWidget {
           ),
         ),
         actions: const [
-          Icon(
-            Icons.favorite,
-            color: Colors.red,
-            size: 29,
-          ),
-          SizedBox(
-            width: 19,
-          ),
-          Icon(
-            Icons.play_arrow_outlined,
-            size: 29,
-            color: Colors.black,
-          ),
-          SizedBox(
-            width: 19,
-          ),
-          Icon(
-            Icons.shopping_cart_outlined,
-            size: 29,
-            color: Colors.black,
-          ),
-          SizedBox(
-            width: 19,
-          ),
-          Icon(
-            Icons.share,
-            size: 29,
-            color: Colors.black,
-          ),
-          SizedBox(
-            width: 29,
-          ),
+          Icon(Icons.favorite, color: Colors.red, size: 29),
+          SizedBox(width: 19),
+          Icon(Icons.play_arrow_outlined, size: 29, color: Colors.black),
+          SizedBox(width: 19),
+          Icon(Icons.shopping_cart_outlined, size: 29, color: Colors.black),
+          SizedBox(width: 19),
+          Icon(Icons.share, size: 29, color: Colors.black),
+          SizedBox(width: 29),
         ],
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          SizedBox(
-            height: 300,
-            width: double.infinity,
-            child: Image.asset(
-              'assets/IMG_3667.HEIC',
-              fit: BoxFit.cover,
-            ),
-          ),
-          Padding(
-            padding: const EdgeInsets.all(22),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Text(
-                  'Kariwari Chicken Curry',
-                  style: TextStyle(
-                    color: Color(0xff4A7C74),
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24,
-                  ),
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                Row(
-                  children: [
-                    CustomContainer(
-                      title: 'Easy',
-                    ),
-                    CustomContainer(
-                      title: '35 mnc',
-                      icon: Icons.timelapse,
-                    ),
-                    CustomContainer(
-                      title: 'ingredients',
-                      icon: Icons.nightlife_rounded,
-                    )
-                  ],
-                ),
-                const SizedBox(
-                  height: 12,
-                ),
-                const Text(
-                  '''
-                  Kensar is a smell coastal town of north Karnakate.
-Kervori food is based on generous use of cosort.
-Kansari chicken curey is cooked in cosonut gravy and with usa at vary logs oil. am shanng Authontic Kansari Rosize. Do try k. You are gaing to love t.
-                  ''',
-                  style: TextStyle(fontSize: 16, height: 1.5),
-                  textAlign: TextAlign.justify,
-                )
-              ],
-            ),
-          ),
-        ],
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _errorMessage.isNotEmpty
+              ? Center(child: Text(_errorMessage))
+              : (_recipe != null
+                  ? DetailsWidget(recipe: _recipe!)
+                  : Center(child: Text('Recipe not found'))),
     );
   }
 }
