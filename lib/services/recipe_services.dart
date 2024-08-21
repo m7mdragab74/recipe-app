@@ -24,7 +24,7 @@ class RecipeService {
     try {
       final response = await dio.get(
         'https://api.spoonacular.com/recipes/complexSearch',
-        queryParameters: {'apiKey': ''},
+        queryParameters: {'apiKey': '16f916df31eb46529a4012b3a03cd1be'},
       );
 
       if (response.data != null && response.data['results'] != null) {
@@ -47,7 +47,7 @@ class RecipeService {
     try {
       final response = await dio.get(
         'https://api.spoonacular.com/recipes/$id/information?&includeNutrition=false',
-        queryParameters: {'apiKey': ''},
+        queryParameters: {'apiKey': '16f916df31eb46529a4012b3a03cd1be'},
       );
 
       if (response.data != null) {

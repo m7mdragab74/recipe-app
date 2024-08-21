@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/database/db_helper.dart';
 import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/views/recipe_details.dart';
 
 class RecipeCard extends StatefulWidget {
-  const RecipeCard({super.key, required this.recipe});
-
   final RecipeModel recipe;
+
+  const RecipeCard({super.key, required this.recipe});
 
   @override
   State<RecipeCard> createState() => _RecipeCardState();
@@ -13,6 +14,40 @@ class RecipeCard extends StatefulWidget {
 
 class _RecipeCardState extends State<RecipeCard> {
   bool isFavorite = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _checkIfFavorite();
+  }
+
+  Future<void> _checkIfFavorite() async {
+    try {
+      final db = DatabaseHelper();
+      final favorites = await db.getFavorites();
+      setState(() {
+        isFavorite = favorites.any((recipe) => recipe.id == widget.recipe.id);
+      });
+    } catch (e) {
+      print("Error checking if favorite: $e");
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    try {
+      final db = DatabaseHelper();
+      if (isFavorite) {
+        await db.deleteFavorite(widget.recipe.id);
+      } else {
+        await db.insertFavorite(widget.recipe);
+      }
+      setState(() {
+        isFavorite = !isFavorite;
+      });
+    } catch (e) {
+      print("Error toggling favorite: $e");
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,11 +88,7 @@ class _RecipeCardState extends State<RecipeCard> {
                   shape: BoxShape.circle,
                 ),
                 child: IconButton(
-                  onPressed: () {
-                    setState(() {
-                      isFavorite = !isFavorite;
-                    });
-                  },
+                  onPressed: _toggleFavorite,
                   icon: Icon(
                     isFavorite ? Icons.favorite : Icons.favorite_border,
                     color: isFavorite ? Colors.red : Colors.white,

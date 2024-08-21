@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/database/db_helper.dart';
+import 'package:recipe_app/models/recipe_model.dart';
 import 'package:recipe_app/views/recipe_list.dart';
 import 'package:recipe_app/widget/recipe%20list/custom_app_bar.dart';
 import 'package:recipe_app/widget/recipe%20list/custom_botton_nav_bar.dart';
+import 'package:recipe_app/widget/recipe%20list/recipe_card.dart';
 
 class FavoriteRecipePage extends StatefulWidget {
   const FavoriteRecipePage({super.key});
@@ -11,8 +14,24 @@ class FavoriteRecipePage extends StatefulWidget {
 }
 
 class _FavoriteRecipePageState extends State<FavoriteRecipePage> {
-  int _selectedIndex =
-      1; // Set this to 1 since it's the second tab in the nav bar
+  List<RecipeModel> _favorites = [];
+  bool _isLoading = true;
+  int _selectedIndex = 1;
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchFavorites();
+  }
+
+  Future<void> _fetchFavorites() async {
+    final db = DatabaseHelper();
+    final favorites = await db.getFavorites();
+    setState(() {
+      _favorites = favorites;
+      _isLoading = false;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -30,12 +49,29 @@ class _FavoriteRecipePageState extends State<FavoriteRecipePage> {
           });
         },
       ),
-      appBar: const CustomAppBarWidget(
+      appBar: CustomAppBarWidget(
         title: 'Favorite Recipe',
       ),
-      body: const Center(
-        child: Text('Your favorite recipes will appear here.'),
-      ),
+      body: _isLoading
+          ? const Center(child: CircularProgressIndicator())
+          : _favorites.isEmpty
+              ? const Center(child: Text('No favorites yet'))
+              : GridView.builder(
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 9,
+                    mainAxisSpacing: 1,
+                  ),
+                  itemCount: _favorites.length,
+                  itemBuilder: (context, index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(12),
+                      child: RecipeCard(
+                        recipe: _favorites[index],
+                      ),
+                    );
+                  },
+                ),
     );
   }
 }

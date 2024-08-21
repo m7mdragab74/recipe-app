@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:recipe_app/database/db_helper.dart';
 import 'package:recipe_app/models/recipe_model.dart';
-import 'package:recipe_app/services/recipe_services.dart';
 import 'package:recipe_app/widget/details%20page/details_widget.dart';
+import 'package:recipe_app/services/recipe_services.dart';
 
 class RecipeDetailsPage extends StatefulWidget {
-  final int recipeId; // Ensure this is an int or String as per your model
+  final int recipeId;
 
   const RecipeDetailsPage({super.key, required this.recipeId});
 
@@ -16,6 +17,7 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
   bool _isLoading = true;
   String _errorMessage = '';
   RecipeModel? _recipe;
+  bool _isFavorite = false;
 
   @override
   void initState() {
@@ -27,8 +29,11 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
     final recipeService = RecipeService();
     try {
       final recipe = await recipeService.getRecipeDetails(widget.recipeId);
+      final db = DatabaseHelper();
+      final favorites = await db.getFavorites();
       setState(() {
         _recipe = recipe;
+        _isFavorite = favorites.any((fav) => fav.id == widget.recipeId);
         _isLoading = false;
       });
     } catch (e) {
@@ -37,6 +42,25 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
             'Failed to load recipe details. Please try again later.';
         _isLoading = false;
       });
+    }
+  }
+
+  Future<void> _toggleFavorite() async {
+    try {
+      final db = DatabaseHelper();
+      if (_isFavorite) {
+        await db.deleteFavorite(widget.recipeId);
+      } else {
+        if (_recipe != null) {
+          await db.insertFavorite(_recipe!);
+        }
+      }
+      setState(() {
+        _isFavorite = !_isFavorite;
+      });
+    } catch (e) {
+      // Handle or log error
+      print("Error toggling favorite: $e");
     }
   }
 
@@ -54,15 +78,23 @@ class _RecipeDetailsPageState extends State<RecipeDetailsPage> {
             size: 29,
           ),
         ),
-        actions: const [
-          Icon(Icons.favorite, color: Colors.red, size: 29),
-          SizedBox(width: 19),
-          Icon(Icons.play_arrow_outlined, size: 29, color: Colors.black),
-          SizedBox(width: 19),
-          Icon(Icons.shopping_cart_outlined, size: 29, color: Colors.black),
-          SizedBox(width: 19),
-          Icon(Icons.share, size: 29, color: Colors.black),
-          SizedBox(width: 29),
+        actions: [
+          IconButton(
+            onPressed: _toggleFavorite,
+            icon: Icon(
+              _isFavorite ? Icons.favorite : Icons.favorite_border,
+              color: _isFavorite ? Colors.red : Colors.black,
+              size: 29,
+            ),
+          ),
+          const SizedBox(width: 19),
+          const Icon(Icons.play_arrow_outlined, size: 29, color: Colors.black),
+          const SizedBox(width: 19),
+          const Icon(Icons.shopping_cart_outlined,
+              size: 29, color: Colors.black),
+          const SizedBox(width: 19),
+          const Icon(Icons.share, size: 29, color: Colors.black),
+          const SizedBox(width: 29),
         ],
       ),
       body: _isLoading

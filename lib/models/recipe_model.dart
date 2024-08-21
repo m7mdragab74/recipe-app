@@ -30,7 +30,30 @@ class RecipeModel {
       time: json['readyInMinutes'] ?? 0,
       summary: json['summary'] ?? 'No summary',
       ingredients: ingredients,
-      healthScore: json['healthScore'] ?? 0, // Ensure this is an int
+      healthScore: json['healthScore'] ?? 0,
+    );
+  }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'title': title,
+      'image': image,
+      'time': time,
+      'summary': summary,
+      'healthScore': healthScore,
+    };
+  }
+
+  factory RecipeModel.fromMap(Map<String, dynamic> map) {
+    return RecipeModel(
+      id: map['id'],
+      title: map['title'],
+      image: map['image'],
+      time: map['time'],
+      summary: map['summary'],
+      healthScore: map['healthScore'],
+      ingredients: [],
     );
   }
 }
